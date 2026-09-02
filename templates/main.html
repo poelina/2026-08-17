@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список задач</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+
+    <div class="header-bar">
+        <h2>📈 Мои Задачи</h2>
+    </div>
+
+    <div class="stats-container">
+        <div class="stat-box">
+            <strong>Всего задач:</strong> {{ total_tasks }}
+        </div>
+        <div class="stat-box stat-box-completed">
+            <strong>Выполнено:</strong> {{ completed_tasks }}
+        </div>
+        <div class="stat-box stat-box-pending">
+            <strong>В ожидании:</strong> {{ pending_tasks }}
+        </div>
+    </div>
+
+    <div class="main-layout">
+        <div class="sidebar">
+            <h3>📁 Категории</h3>
+            <a href="{% url 'todo:index' %}" class="category-link">Все категории</a>
+            {% for category in categories %}
+                <a href="?category={{ category.id }}" class="category-link">
+                    • {{ category.name }} ({{ category.tasks.count }})
+                </a>
+            {% empty %}
+                <p>Категорий нет</p>
+            {% endfor %}
+        </div>
+
+        <div class="content-area">
+            <div class="content-header">
+                <h3>Список дел</h3>
+                <a href="#" class="btn btn-primary">+ Новая задача</a>
+            </div>
+
+            {% for task in tasks %}
+                <div class="task-card">
+                    <div>
+                        <h4 class="{% if task.is_completed %}line-through{% endif %}">
+                            {{ task.title }}
+                        </h4>
+                        <p>{{ task.description }}</p>
+                        <span class="task-card-meta">
+                            📅 До: {{ task.due_date|date:"d.m.Y H:i"|default:"Не указан" }}
+                        </span>
+                    </div>
+                    <div>
+                        <a href="{{ task.get_absolute_url }}">Просмотр</a>
+                        {% if task.is_completed %}
+                            <span class="task-status-completed">Готово</span>
+                        {% else %}
+                            <span class="task-status-active">Активна</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-state">
+                    <p>🎉 Список пуст! Задач не обнаружено.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

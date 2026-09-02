@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/styles.css"> 
+</head>
+<body>
+
+    <div class="header-bar">
+        <h2>📈 Просмотр задачи</h2>
+    </div>
+
+    <div class="main-layout">
+        <div class="sidebar">
+            <h3>📁 Категории</h3>
+            <a href="{% url 'todo:index' %}" class="category-link">Все категории</a>
+            {% for category in categories %}
+                <a href="{% url 'todo:index' %}?category={{ category.id }}" class="category-link">
+                    • {{ category.name }} ({{ category.tasks.count }})
+                </a>
+            {% empty %}
+                <p>Категорий нет</p>
+            {% endfor %}
+        </div>
+
+        <div class="content-area">
+            <div class="detail-card">
+                <div class="detail-header">
+                    <h2>{{ task.title }}</h2>
+                    {% if task.is_completed %}
+                        <span class="badge badge-success">✅ Выполнено</span>
+                    {% else %}
+                        <span class="badge badge-info">⏳ В процессе</span>
+                    {% endif %}
+                </div>
+
+                <hr class="detail-divider">
+
+                <div class="detail-description">
+                    <h4>Описание:</h4>
+                    <p>{{ task.description|default:"Описание отсутствует" }}</p>
+                </div>
+
+                <div class="detail-meta-grid">
+                    <div class="meta-pill meta-pill-category">
+                        <strong>📁 Категория:</strong> {{ task.category_task.name|default:"Без категории" }}
+                    </div>
+                    <div class="meta-pill meta-pill-created">
+                        <strong>📅 Создано:</strong> {{ task.created_date|date:"d.m.Y H:i" }}
+                    </div>
+                    <div class="meta-pill meta-pill-due">
+                        <strong>🚨 Срок:</strong> {{ task.due_date|date:"d.m.Y H:i"|default:"Не ограничен" }}
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <a href="{% url 'todo:index' %}" class="btn btn-secondary">Назад к списку</a>
+                    <a href="#" class="btn btn-warning">Редактировать</a>
+                    <a href="#" class="btn btn-danger">Удалить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

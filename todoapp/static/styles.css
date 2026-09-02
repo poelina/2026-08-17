@@ -1,0 +1,281 @@
+/* --- Global Body & Reset --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f5f6f8;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+/* --- Layout Structure --- */
+.header-bar {
+    background-color: #ffffff;
+    padding: 15px 30px;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+}
+
+.header-bar h2 {
+    margin: 0;
+}
+
+.main-layout {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    gap: 20px;
+}
+
+/* --- Navigation Sidebar --- */
+.sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    align-self: flex-start;
+}
+
+.sidebar h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #444;
+}
+
+.sidebar p {
+    color: #888888;
+    font-size: 0.9em;
+    margin: 0;
+}
+
+.category-link {
+    display: block;
+    color: #0056b3;
+    text-decoration: none;
+    padding: 8px 0;
+    font-size: 0.95em;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.category-link:hover {
+    text-decoration: underline;
+}
+
+/* --- Central Content Blocks --- */
+.content-area {
+    flex-grow: 1;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.content-header h3 {
+    margin: 0;
+}
+
+/* --- Statistics Dashboard --- */
+.stats-container {
+    display: flex;
+    max-width: 1160px;
+    margin: 0 auto 20px auto;
+    padding: 0 20px;
+    gap: 15px;
+}
+
+.stat-box {
+    flex: 1;
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.stat-box-completed {
+    color: #198754;
+}
+
+.stat-box-pending {
+    color: #0056b3;
+}
+
+/* --- Task Lists and Cards --- */
+.task-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+.task-card h4 {
+    margin: 0 0 5px 0;
+}
+
+.task-card p {
+    margin: 0 0 10px 0;
+    color: #666666;
+    font-size: 0.9em;
+}
+
+.task-card a {
+    color: #333333;
+    margin-right: 10px;
+}
+
+.task-card-meta {
+    font-size: 0.8em;
+    color: #666666;
+    background: #eee;
+    padding: 3px 6px;
+    border-radius: 3px;
+}
+
+.task-status-completed {
+    color: #198754;
+    font-weight: bold;
+}
+
+.task-status-active {
+    color: #0056b3;
+    font-weight: bold;
+}
+
+.line-through {
+    text-decoration: line-through;
+    color: #888888;
+}
+
+.empty-state {
+    background: white;
+    padding: 30px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.empty-state p {
+    color: #888888;
+    margin: 0;
+}
+
+/* --- Detail View (taskview.html) Elements --- */
+.detail-card {
+    background: white;
+    padding: 25px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.detail-header h2 {
+    margin: 0;
+    color: #333;
+}
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.85em;
+}
+
+.badge-success {
+    background-color: #d1e7dd;
+    color: #1a1d20;
+}
+
+.badge-info {
+    background-color: #cfe2ff;
+    color: #1a1d20;
+}
+
+.detail-divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin-bottom: 15px;
+}
+
+.detail-description h4 {
+    margin: 0 0 5px 0;
+    color: #666;
+}
+
+.detail-description p {
+    margin: 0;
+    line-height: 1.5;
+    color: #212529;
+    white-space: pre-line;
+}
+
+.detail-meta-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    font-size: 0.9em;
+}
+
+.meta-pill {
+    background: #f8f9fa;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.meta-pill-category { border-left: 3px solid #0056b3; }
+.meta-pill-created { border-left: 3px solid #6c757d; }
+.meta-pill-due { border-left: 3px solid #dc3545; }
+
+/* --- Action & Button System --- */
+.btn-group {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9em;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: #0056b3;
+    color: white;
+    padding: 8px 12px;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: #000;
+    font-weight: 500;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
