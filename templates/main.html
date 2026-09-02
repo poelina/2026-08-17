@@ -40,7 +40,7 @@
         <div class="content-area">
             <div class="content-header">
                 <h3>Список дел</h3>
-                <a href="#" class="btn btn-primary">+ Новая задача</a>
+                <a href="{% url 'todo:task_create' %}" class="btn btn-primary">+ Новая задача</a>
             </div>
 
             {% for task in tasks %}
@@ -54,10 +54,21 @@
                             📅 До: {{ task.due_date|date:"d.m.Y H:i"|default:"Не указан" }}
                         </span>
                     </div>
-                    <div>
+                    
+                    <div style="display: flex; align-items: center; gap: 15px;">
                         <a href="{{ task.get_absolute_url }}">Просмотр</a>
+
+                        <form action="{% url 'todo:task_toggle' task.id %}" method="post" style="margin: 0;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn" style="padding: 4px 10px; font-size: 0.85em; cursor: pointer; background: #e9ecef; border: 1px solid #ced4da; border-radius: 4px; font-family: inherit;">
+                                {% if task.is_completed %}↩️ Вернуть{% else %}✅ Выполнить{% endif %}
+                            </button>
+                        </form>
+
                         {% if task.is_completed %}
                             <span class="task-status-completed">Готово</span>
+                        {% elif task.is_past_due %}
+                            <span class="task-status-expired" style="color: #dc3545; font-weight: bold;">Просрочена</span>
                         {% else %}
                             <span class="task-status-active">Активна</span>
                         {% endif %}

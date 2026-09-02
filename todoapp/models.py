@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 
 class Category(models.Model):
@@ -31,7 +32,7 @@ class Task(models.Model):
     )
 
     description = models.TextField(
-        max_length=200,
+        max_length=500,
         verbose_name="Описание",
         help_text="Введите описание задачи:"
     )
@@ -62,6 +63,16 @@ class Task(models.Model):
         verbose_name="Название",
         related_name="tasks", #category.tasks.all
     )
+
+    @property
+    def is_past_due(self):
+        if self.due_date and not self.is_completed:
+            return timezone.now() > self.due_date
+        return False
+
+    def toggle_completed(self):
+        self.is_completed = not self.is_completed
+        self.save()
     
     def __str__(self):
         return self.title

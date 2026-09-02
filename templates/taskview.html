@@ -31,6 +31,10 @@
                     <h2>{{ task.title }}</h2>
                     {% if task.is_completed %}
                         <span class="badge badge-success">✅ Выполнено</span>
+
+                    {% elif task.is_past_due %}
+                        <span class="badge" style="background-color: #f8d7da; color: #842029;">🚨 Просрочена</span>
+
                     {% else %}
                         <span class="badge badge-info">⏳ В процессе</span>
                     {% endif %}
@@ -57,7 +61,16 @@
 
                 <div class="btn-group">
                     <a href="{% url 'todo:index' %}" class="btn btn-secondary">Назад к списку</a>
-                    <a href="#" class="btn btn-warning">Редактировать</a>
+
+                    <form action="{% url 'todo:task_toggle' task.id %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn {% if task.is_completed %}btn-secondary{% else %}btn-primary{% endif %}" style="border: none; cursor: pointer;">
+                            {% if task.is_completed %}Отметить как активную{% else %}Отметить как выполненную{% endif %}
+                        </button>
+                    </form>
+
+
+                    <a href="{% url 'todo:task_edit' task.id %}" class="btn btn-warning">Редактировать</a>
                     <a href="#" class="btn btn-danger">Удалить</a>
                 </div>
             </div>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новая задача</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+
+    <div class="header-bar">
+        <h2>
+            {% if form.instance.pk %}📝 Редактирование задачи{% else %}✨ Создание новой задачи{% endif %}
+        </h2>
+    </div>
+
+    <div class="main-layout">
+
+        <div class="content-area">
+
+            <div class="form-container">
+                
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    
+                    {% for field in form %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="help-text">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <span style="color: #dc3545; font-size: 0.85em; display: block; margin-top: 4px;">
+                                    ⚠️ {{ error }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+
+                    <div class="btn-group" style="margin-top: 25px;">
+                        <button type="submit" class="btn btn-primary" style="border: none; cursor: pointer; font-weight: 500;">
+                            Сохранить задачу
+                        </button>
+                        <a href="{% url 'todo:index' %}" class="btn btn-secondary">
+                            Отмена
+                        </a>
+                    </div>
+                </form>
+                
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

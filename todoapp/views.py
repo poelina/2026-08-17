@@ -1,6 +1,6 @@
-from django.contrib import messages  # Для вывода уведомлений 
-from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy  # Для отложенного построения URL
+from django.contrib import messages
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import (
     CreateView,
@@ -11,6 +11,7 @@ from django.views.generic import (
 )
 
 from .models import Category, Task
+from .forms import TaskForm
 
 
 class IndexView(View):
@@ -76,3 +77,33 @@ class TaskDetailView(DetailView):
         context['categories'] = Category.objects.all()
 
         return context
+
+
+class TaskCreateView(CreateView):
+    model = Task
+    form_class = TaskForm
+    template_name = "task_form.html"
+    success_url = reverse_lazy('todo:index')
+
+
+class TaskUpdateView(UpdateView):
+    model = Task
+    form_class = TaskForm
+    template_name = "task_form.html"
+
+    def get_success_url(self):
+        return reverse('todo:task_detail', kwargs={'pk': self.object.pk})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f"Редактирование: {self.object.title}"
+        context['categories'] = Category.objects.all()
+        return context
+
+
+class TaskToggleCompleteView(View):
+    def post(self, request, pk):
+        task = get_object_or_404(Task, pk=pk)
+        task.toggle_completed()
+        
+        return redirect(request.META.get('HTTP_REFERER', 'todo:index'))
